@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "brain_version": "v7_cook2019_full_hybrid_poseidon_t1",
+  "run_id": "20260621T180725Z_worker_prove",
+  "circuit_package": "brain_v7_cook2019_full_hybrid_poseidon_t1",
+  "variant": "poseidon",
+  "proof_statement": "Cook 2019 one-tick full documented current model with dynamic Randi modulation, hybrid calcium-spike/refractory hook, and motor outputs, poseidon public output scheme",
+  "source_reference": {
+    "schema_version": 1,
+    "package": "brain_v7_cook2019_full_hybrid_poseidon_t1",
+    "brain_version": "v7_cook2019_full_hybrid_poseidon_t1",
+    "variant": "poseidon",
+    "source_model_dir": "brain/_current_model plus repo-relative brain imports",
+    "source_commit": "d8454642be654ea3d6a2e8e18e4c788f4d86185f",
+    "neuron_count": 302,
+    "chemical_edges": 3709,
+    "gap_entries_directed": 2199,
+    "randi": {
+      "documented_order": "randi.update(pre_step_v, dt_ms=0.5) -> net.set_synaptic_gain(gain) -> neural_step -> motor outputs",
+      "alpha_min": 0.95,
+      "tau_ms": 8000.0,
+      "gain": 0.25,
+      "clip": 0.35,
+      "source_edges_before_normalization": 796,
+      "matched_neurons": 160,
+      "positive_sparse_edges": 723,
+      "negative_sparse_edges": 73,
+      "state_encoding": "u32 signed magnitude: 0 zero, 1..1000000 positive, 2000000+x negative"
+    },
+    "motor": {
+      "muscle_landmarks": 74,
+      "muscle_targets": 357,
+      "excitatory_targets": 262,
+      "inhibitory_targets": 95,
+      "quadrants": [
+        12,
+        4
+      ],
+      "activation_approximation": "piecewise-linear Boltzmann over encoded voltage; VH=55000 (-35mV), KW=11110 approximates sigmoid slope 0.09 near midpoint",
+      "muscle_names": [
+        "MDL05",
+        "MDL07",
+        "MDL08",
+        "MDL09",
+        "MDL10",
+        "MDL11",
+        "MDL12",
+        "MDL13",
+        "MDL14",
+        "MDL15",
+        "MDL16",
+        "MDL17",
+        "MDL18",
+        "MDL19",
+        "MDL20",
+        "MDL21",
+        "MDL22",
+        "MDL23",
+        "MDL24",
+        "MDR05",
+        "MDR07",
+        "MDR08",
+        "MDR09",
+        "MDR10",
+        "MDR11",
+        "MDR12",
+        "MDR13",
+        "MDR14",
+        "MDR15",
+        "MDR16",
+        "MDR17",
+        "MDR18",
+        "MDR19",
+        "MDR20",
+        "MDR21",
+        "MDR22",
+        "MDR23",
+        "MDR24",
+        "MVL07",
+        "MVL08",
+        "MVL09",
+        "MVL10",
+        "MVL11",
+        "MVL12",
+        "MVL13",
+        "MVL14",
+        "MVL15",
+        "MVL16",
+        "MVL17",
+        "MVL18",
+        "MVL19",
+        "MVL20",
+        "MVL21",
+        "MVL22",
+        "MVL23",
+        "MVL24",
+        "MVR07",
+        "MVR08",
+        "MVR09",
+        "MVR10",
+        "MVR11",
+        "MVR12",
+        "MVR13",
+        "MVR14",
+        "MVR15",
+        "MVR16",
+        "MVR17",
+        "MVR18",
+        "MVR19",
+        "MVR20",
+        "MVR21",
+        "MVR22",
+        "MVR23",
+        "MVR24"
+      ]
+    },
+    "hybrid_spiking_declared_in_python": [
+      "AVL",
+      "AWAL",
+      "AWAR",
+      "DVB"
+    ],
+    "hybrid_spiking_circuitized": {
+      "source_hook": "brain/zkworm_neurons.py _apply_hybrid_spikes",
+      "boundary": "after neural_step, before motor_outputs",
+      "names_sorted": [
+        "AVL",
+        "AWAL",
+        "AWAR",
+        "DVB"
+      ],
+      "indices": [
+        70,
+        72,
+        73,
+        111
+      ],
+      "refractory_encoding": "u32 milliseconds * 1000; one t1 tick subtracts DT_ENC=500",
+      "i_ext_threshold_encoding": "v6 integer current units interpreted as pA-compatible integers: AWA threshold ceil(1.5 pA)=2, AVL/DVB threshold 20; canonical witness i_ext is all zero",
+      "voltage_thresholds_encoded": {
+        "AWA": 52000,
+        "AVL_DVB": 65000
+      },
+      "spike_voltage_encoded": {
+        "AWA_AVL": 95000,
+        "DVB": 110000
+      },
+      "cai_delta_encoded": 40000,
+      "cai_max_encoded": 500000,
+      "refractory_reset_encoded": {
+        "AWA": 220000,
+        "AVL_DVB": 400000
+      }
+    },
+    "circuitized_scope": "one tick integer approximation of Cook 2019 current model with dynamic Randi slow modulation, generated synaptic gains, hybrid calcium-spike/refractory hook, and WormAtlas motor adapter outputs",
+    "neuron_names_sha256": "35ca760721c158324b1b9258f2e6ff7399a51eb3fa4cd0edbaed38600f37e79b",
+    "public_output_count": 1,
+    "public_output_layout": {
+      "0": "final_state_hash"
+    },
+    "hash_commitment": "final_state_hash absorbs neural state, Randi state, syn_gain, hybrid_refractory_out, 74 muscle outputs, and 48 quadrant outputs; 302-element remainders are absorbed explicitly",
+    "first_neurons": [
+      "ADAL",
+      "ADAR",
+      "ADEL",
+      "ADER",
+      "ADFL",
+      "ADFR",
+      "ADLL",
+      "ADLR",
+      "AFDL",
+      "AFDR"
+    ],
+    "last_neurons": [
+      "VD04",
+      "VD05",
+      "VD06",
+      "VD07",
+      "VD08",
+      "VD09",
+      "VD10",
+      "VD11",
+      "VD12",
+      "VD13"
+    ]
+  },
+  "toolchain": {
+    "nargo_version": "nargo version = 1.0.0-beta.19\nnoirc version = 1.0.0-beta.19+74d6be658e1ad252f87943292ba09bdd4da80bd4\n(git version hash: 74d6be658e1ad252f87943292ba09bdd4da80bd4, is dirty: false)",
+    "bb_version": "5.0.0-nightly.20260419",
+    "nargo_sha256": "3d01d542e86ef05cf28c3b7862f2941192c695b5067cc5caaf40e4f080eb0f4e",
+    "bb_sha256": "d11fb1cba3928155c4c060c7723d06aeaece12196d127b21ad6b4a69d61e1569"
+  },
+  "witness": {
+    "stimulus": "zero",
+    "ticks": 1,
+    "state_len": 302,
+    "randi_state_init": "all signed-magnitude zero",
+    "hybrid_refractory_init": "all zero, encoded ms*1000",
+    "i_ext": "all zero; nonzero thresholds use v6 integer pA-compatible units",
+    "public_output_fields": 1
+  },
+  "artifacts": {
+    "circuit": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/src/main.nr",
+    "model_source": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/MODEL_SOURCE.json",
+    "prover_toml": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/Prover.toml",
+    "logs": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove",
+    "tracked_logs": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove"
+  },
+  "public_outputs": {
+    "count": 1,
+    "final_state_hash": "0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f",
+    "sample": [
+      "0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f"
+    ]
+  },
+  "artifact_sizes_bytes": {
+    "compiled_circuit_json": 8627401,
+    "witness_gz": 1257015,
+    "verification_key": 1888,
+    "proof": 10304,
+    "public_inputs": 32,
+    "fixture_proof_bin": 10304,
+    "fixture_public_inputs_bin": 32
+  },
+  "records": [
+    {
+      "label": "nargo_check",
+      "command": "/Users/bot/.nargo/bin/nargo check",
+      "cwd": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1",
+      "exit_code": 0,
+      "wall_seconds": 0.1021108627319336,
+      "time_l": {
+        "max_rss_bytes": 95748096,
+        "minor_faults": 6243,
+        "page_faults": 0,
+        "max_rss_mb": 91.31
+      },
+      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/nargo_check.stdout.log",
+      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/nargo_check.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/nargo_check.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/nargo_check.stderr.log"
+    },
+    {
+      "label": "nargo_compile",
+      "command": "/Users/bot/.nargo/bin/nargo compile",
+      "cwd": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1",
+      "exit_code": 0,
+      "wall_seconds": 0.5793931484222412,
+      "time_l": {
+        "max_rss_bytes": 486424576,
+        "minor_faults": 34959,
+        "page_faults": 0,
+        "max_rss_mb": 463.89
+      },
+      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/nargo_compile.stdout.log",
+      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/nargo_compile.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/nargo_compile.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/nargo_compile.stderr.log"
+    },
+    {
+      "label": "nargo_execute",
+      "command": "/Users/bot/.nargo/bin/nargo execute",
+      "cwd": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1",
+      "exit_code": 0,
+      "wall_seconds": 1.4495859146118164,
+      "time_l": {
+        "max_rss_bytes": 505741312,
+        "minor_faults": 67284,
+        "page_faults": 0,
+        "max_rss_mb": 482.31
+      },
+      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/nargo_execute.stdout.log",
+      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/nargo_execute.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/nargo_execute.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/nargo_execute.stderr.log"
+    },
+    {
+      "label": "bb_write_vk",
+      "command": "/Users/bot/.bb/bb write_vk -b /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/brain_v7_cook2019_full_hybrid_poseidon_t1.json -o /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target --scheme ultra_honk --oracle_hash keccak",
+      "cwd": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1",
+      "exit_code": 0,
+      "wall_seconds": 2.9405670166015625,
+      "time_l": {
+        "max_rss_bytes": 1071923200,
+        "minor_faults": 110843,
+        "page_faults": 0,
+        "max_rss_mb": 1022.27
+      },
+      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/bb_write_vk.stdout.log",
+      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/bb_write_vk.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/bb_write_vk.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/bb_write_vk.stderr.log"
+    },
+    {
+      "label": "bb_prove",
+      "command": "/Users/bot/.bb/bb prove -b /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/brain_v7_cook2019_full_hybrid_poseidon_t1.json -w /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/brain_v7_cook2019_full_hybrid_poseidon_t1.gz -o /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/proof_dir -k /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/vk --scheme ultra_honk --oracle_hash keccak",
+      "cwd": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1",
+      "exit_code": 0,
+      "wall_seconds": 8.039613008499146,
+      "time_l": {
+        "max_rss_bytes": 1291485184,
+        "minor_faults": 160825,
+        "page_faults": 0,
+        "max_rss_mb": 1231.66
+      },
+      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/bb_prove.stdout.log",
+      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/bb_prove.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/bb_prove.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/bb_prove.stderr.log"
+    },
+    {
+      "label": "bb_verify",
+      "command": "/Users/bot/.bb/bb verify -k /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/vk -p /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/proof_dir/proof -i /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/proof_dir/public_inputs --scheme ultra_honk --oracle_hash keccak",
+      "cwd": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1",
+      "exit_code": 0,
+      "wall_seconds": 0.013839960098266602,
+      "time_l": {
+        "max_rss_bytes": 15745024,
+        "minor_faults": 1632,
+        "page_faults": 7,
+        "max_rss_mb": 15.02
+      },
+      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/bb_verify.stdout.log",
+      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_poseidon_t1/20260621T180725Z_worker_prove/bb_verify.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/bb_verify.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/bb_verify.stderr.log"
+    }
+  ]
+}

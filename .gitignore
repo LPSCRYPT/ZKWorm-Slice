@@ -1,0 +1,17 @@
+# Noir/BB build outputs
+circuits/**/target/
+
+# Demo run logs/artifacts
+runs/
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# OS/editor noise
+.DS_Store
+.vscode/
+.idea/
+
+
+generated/
