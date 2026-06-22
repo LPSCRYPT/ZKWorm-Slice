@@ -19,6 +19,16 @@ VARIANTS = {
         "package": "brain_cook2019_full_hybrid_poseidon_t1",
         "fixture": "circuits/brain_cook2019_full_hybrid_poseidon_t1/target/proof_dir",
     },
+    "open_t10": {
+        "package": "brain_cook2019_full_hybrid_open_t10",
+        "fixture": "circuits/brain_cook2019_full_hybrid_open_t10/target/proof_dir",
+        "demo_variant": "open_t10",
+    },
+    "poseidon_t10": {
+        "package": "brain_cook2019_full_hybrid_poseidon_t10",
+        "fixture": "circuits/brain_cook2019_full_hybrid_poseidon_t10/target/proof_dir",
+        "demo_variant": "poseidon_t10",
+    },
 }
 
 
@@ -35,7 +45,8 @@ def ensure_artifacts(variant: str) -> None:
     package = VARIANTS[variant]["package"]
     circuit = ROOT / "circuits" / package
     if not (circuit / "target" / "vk").exists() or not (circuit / "target/proof_dir/proof").exists():
-        cmd = ["python3", "scripts/run_demo.py", "--variant", variant, "--prove", "--run-id", "deploy_artifacts"]
+        demo_variant = VARIANTS[variant].get("demo_variant", variant)
+        cmd = ["python3", "scripts/run_demo.py", "--variant", demo_variant, "--prove", "--run-id", "deploy_artifacts"]
         run(cmd)
 
 
@@ -158,7 +169,7 @@ def call_verify(variant: str, address: str, rpc_url: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate, deploy, and exercise a Solidity verifier.")
-    parser.add_argument("--variant", choices=["open", "poseidon"], required=True)
+    parser.add_argument("--variant", choices=sorted(VARIANTS), required=True)
     parser.add_argument("--rpc-url", default=os.environ.get("RPC_URL"))
     parser.add_argument("--private-key", default=os.environ.get("PRIVATE_KEY"))
     parser.add_argument("--address", help="Use an existing verifier address instead of deploying.")

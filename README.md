@@ -2,14 +2,16 @@
 
 ![ZKWorm-Slice brain circuit dataflow](docs/assets/brain_slice_dataflow_cover.png)
 
-Standalone public demo slice for the ZKWorm one-tick brain circuit.
+Standalone public demo slice for the ZKWorm brain circuit.
 
-This repository contains two self-contained Noir circuits generated from the ZKWorm current-model benchmark:
+This repository contains four self-contained Noir circuits generated from the ZKWorm current-model benchmark:
 
-- `brain_cook2019_full_hybrid_open_t1`: exposes the full public output vector.
-- `brain_cook2019_full_hybrid_poseidon_t1`: exposes only the Poseidon commitment.
+- `brain_cook2019_full_hybrid_open_t1`: exposes the full public output vector for one tick.
+- `brain_cook2019_full_hybrid_poseidon_t1`: exposes only the Poseidon commitment for one tick.
+- `brain_cook2019_full_hybrid_open_t10`: exposes the full public output vector after ten internally continuous ticks.
+- `brain_cook2019_full_hybrid_poseidon_t10`: exposes only the Poseidon commitment after ten internally continuous ticks.
 
-Both circuits prove one tick of the documented Cook 2019 brain model with dynamic Randi slow modulation, the hybrid spike/refractory hook, generated synaptic gains, and WormAtlas motor-adapter outputs.
+All circuits prove the documented Cook 2019 brain model with dynamic Randi slow modulation, the hybrid spike/refractory hook, generated synaptic gains, and WormAtlas motor-adapter outputs.
 
 ## On-chain deployments and benchmark snapshot
 
@@ -21,10 +23,12 @@ Canonical rest/zero-stimulus final hash for both variants:
 
 ### Base Sepolia deployments
 
-| Variant | Verifier contract | Verify tx | Public outputs | Verify gas |
-| --- | --- | --- | ---: | ---: |
-| Poseidon commitment | `0x4C8dDe9847DaB578175514584CFe32E5DC55Cec9` | `0x09026f39dd7027c10e62e7b420994b97a9fde66f8c8262cdfbaec14d751c9f03` | 1 field | 4,236,198 |
-| Open outputs | `0x0E5e9A3FEF33a807C56F7E01f8edA205e853f394` | `0x4c724719d9ef44b0f69c6fa7db965d42f4bf55b33248c9348a9aec53c906d611` | 3143 fields | 9,218,063 |
+| Variant | Ticks | Verifier contract | Verify tx | Public outputs | Verify gas |
+| --- | ---: | --- | --- | ---: | ---: |
+| Poseidon commitment | 1 | `0x4C8dDe9847DaB578175514584CFe32E5DC55Cec9` | `0x09026f39dd7027c10e62e7b420994b97a9fde66f8c8262cdfbaec14d751c9f03` | 1 field | 4,236,198 |
+| Open outputs | 1 | `0x0E5e9A3FEF33a807C56F7E01f8edA205e853f394` | `0x4c724719d9ef44b0f69c6fa7db965d42f4bf55b33248c9348a9aec53c906d611` | 3143 fields | 9,218,063 |
+| Poseidon commitment | 10 | `0x7a7AACF9f9D748C5C64a267338D011bB57FEA055` | `0x6c9cb32166d07f519732059464e6ea76b9854f2812332621a63579c3f1e344a1` | 1 field | 4,537,276 |
+| Open outputs | 10 | `0x6c806386c6580937895aB209F0e610AED0aCc332` | `0xabc21ca8db947231a5fee3cb59f0d1f8f89b8c6c032d37caf9f10e0ddfe5ae1e` | 3143 fields | 9,525,134 |
 
 Network details and transaction notes are in `docs/base_sepolia_verification_result.md`.
 

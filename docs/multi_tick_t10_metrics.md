@@ -46,6 +46,15 @@ Run id: `vast_t10_20260619_b`
 | `brain_cook2019_full_hybrid_poseidon_t10` | 1 field | 11,456 B | 32 B | 46,900.94 MB / 1015.83 s | 3340.82 MB / 25.19 s | 8771.15 MB / 28.47 s | 10,457.50 MB / 43.02 s | 9.27 MB / 0.018 s |
 | `brain_cook2019_full_hybrid_open_t10` | 3143 fields | 11,456 B | 100,576 B | 49,973.37 MB / 1023.44 s | 3344.19 MB / 25.43 s | 8857.45 MB / 37.26 s | 10,489.85 MB / 42.81 s | 10.02 MB / 0.020 s |
 
+## Base Sepolia deployment
+
+| Variant | Verifier contract | Verify tx | Public outputs | Verify gas |
+| --- | --- | --- | ---: | ---: |
+| `brain_cook2019_full_hybrid_poseidon_t10` | `0x7a7AACF9f9D748C5C64a267338D011bB57FEA055` | `0x6c9cb32166d07f519732059464e6ea76b9854f2812332621a63579c3f1e344a1` | 1 field | 4,537,276 |
+| `brain_cook2019_full_hybrid_open_t10` | `0x6c806386c6580937895aB209F0e610AED0aCc332` | `0xabc21ca8db947231a5fee3cb59f0d1f8f89b8c6c032d37caf9f10e0ddfe5ae1e` | 3143 fields | 9,525,134 |
+
+Both transactions returned `status: 0x1`; the deployment script also checked each verifier with a successful `cast call` before sending the transaction. The ten-tick contracts are deployed separately from the one-tick contracts because their verification keys and circuit relations are different.
+
 ## Artifacts
 
 - Poseidon manifest: `runs/cook2019_full_hybrid_poseidon_t10/vast_t10_20260619_b/manifest.json`
