@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import math
 import json
 import os
 import re
@@ -47,13 +48,44 @@ def arr(name: str, xs: list[int]) -> str:
     return f"{name} = [" + ", ".join(map(str, xs)) + "]"
 
 
-def write_prover(circuit_dir: Path, ticks: int) -> None:
+def external_current_rows(ticks: int, stimulus: str) -> tuple[list[str], dict]:
+    rows = [[0] * N for _ in range(ticks)]
+    if stimulus == "zero":
+        description = "all zero external current"
+    elif stimulus == "sinusoidal_awa":
+        # Non-negative sinusoid because circuit external currents are u32.
+        # AWAL/AWAR are hybrid-spiking olfactory neurons in the current model.
+        target_indices = [72, 73]
+        offset = 10
+        amplitude = 10
+        values = []
+        for t in range(ticks):
+            value = round(offset + amplitude * math.sin(2 * math.pi * t / ticks))
+            values.append(value)
+            for idx in target_indices:
+                rows[t][idx] = value
+        description = "offset sinusoidal external current into AWAL/AWAR; offset=10 amplitude=10 integer pA-compatible units"
+        return ["  [" + ", ".join(map(str, row)) + "]" for row in rows], {
+            "stimulus": stimulus,
+            "description": description,
+            "target_neurons": ["AWAL", "AWAR"],
+            "target_indices": target_indices,
+            "offset": offset,
+            "amplitude": amplitude,
+            "per_tick_values": values,
+        }
+    else:
+        raise ValueError(f"unknown stimulus: {stimulus}")
+    return ["  [" + ", ".join(map(str, row)) + "]" for row in rows], {"stimulus": stimulus, "description": description}
+
+
+def write_prover(circuit_dir: Path, ticks: int, stimulus: str) -> dict:
     n = [pb(V0, 109870, 15850)] * N
     p = [pb(V0, 81950, 7430)] * N
     q = [pbi(V0, 74350, 9970)] * N
     e = [pb(V0, 86640, 6750)] * N
     f = [pbi(V0, 115180, 5030)] * N
-    i_ext_rows = ["  [" + ", ".join(["0"] * N) + "]" for _ in range(ticks)]
+    i_ext_rows, stimulus_meta = external_current_rows(ticks, stimulus)
     lines = [
         arr("v_init", [V0] * N),
         arr("n_init", n),
@@ -70,6 +102,7 @@ def write_prover(circuit_dir: Path, ticks: int) -> None:
         "",
     ]
     (circuit_dir / "Prover.toml").write_text("\n".join(lines))
+    return stimulus_meta
 
 
 def time_metrics(stderr: str) -> dict[str, int | float]:
@@ -145,12 +178,12 @@ def artifact_sizes(circuit_dir: Path, package: str) -> dict[str, int]:
     return {key: value.stat().st_size for key, value in paths.items() if value.exists()}
 
 
-def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
+def run_one(variant: str, prove: bool, run_id: str | None, stimulus: str) -> dict:
     package, brain_version, ticks = VARS[variant]
     circuit_dir = ROOT / "circuits" / package
     run_dir = ROOT / "runs" / brain_version / (run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
     run_dir.mkdir(parents=True, exist_ok=True)
-    write_prover(circuit_dir, ticks)
+    stimulus_meta = write_prover(circuit_dir, ticks, stimulus)
     records = [run("nargo_check", [NARGO, "check"], circuit_dir, run_dir, 900)]
     if records[-1]["exit_code"] == 0:
         records.append(run("nargo_compile", [NARGO, "compile"], circuit_dir, run_dir, 3600))
@@ -183,12 +216,12 @@ def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
             "bb_sha256": sha(BB) if prove else None,
         },
         "witness": {
-            "stimulus": "zero",
+            **stimulus_meta,
             "ticks": ticks,
             "state_len": N,
             "randi_state_init": "all signed-magnitude zero",
             "hybrid_refractory_init": "all zero, encoded ms*1000",
-            "i_ext": f"all zero for {ticks} tick(s); nonzero thresholds use v6 integer pA-compatible units",
+            "i_ext_encoding": "v6 integer pA-compatible units; hybrid thresholds are AWA ceil(1.5)=2, AVL/DVB=20",
             "public_output_fields": source["public_output_count"],
         },
         "artifacts": {
@@ -220,6 +253,7 @@ def main() -> int:
     parser.add_argument("--variant", choices=["open", "poseidon", "open_t10", "poseidon_t10", "both", "both_t10"], default="both")
     parser.add_argument("--prove", action="store_true", help="Also run bb write_vk/prove/verify after Nargo execution.")
     parser.add_argument("--run-id", help="Optional deterministic run directory name.")
+    parser.add_argument("--stimulus", choices=["zero", "sinusoidal_awa"], default="zero", help="External-current schedule to write into Prover.toml.")
     args = parser.parse_args()
     if args.variant == "both":
         variants = ["open", "poseidon"]
@@ -227,7 +261,7 @@ def main() -> int:
         variants = ["open_t10", "poseidon_t10"]
     else:
         variants = [args.variant]
-    results = [run_one(variant, args.prove, args.run_id) for variant in variants]
+    results = [run_one(variant, args.prove, args.run_id, args.stimulus) for variant in variants]
     print(json.dumps(results, indent=2))
     return 0 if all(result["last_exit"] == 0 for result in results) else 1
 

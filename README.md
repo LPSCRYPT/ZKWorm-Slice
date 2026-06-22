@@ -15,11 +15,13 @@ All circuits prove the documented Cook 2019 brain model with dynamic Randi slow 
 
 ## On-chain deployments and benchmark snapshot
 
-Canonical rest/zero-stimulus final hash for both variants:
+Canonical ten-tick sinusoidal witness final hash:
 
 ```text
-0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f
+0x23e010051a37941d0f64c45fd3043e052677712757ec349cd81394b3db9ab406
 ```
+
+The one-tick rows below use the rest/zero-stimulus witness. The ten-tick rows use an offset sinusoidal external-current schedule over AWAL/AWAR with per-tick values `[10, 16, 20, 20, 16, 10, 4, 0, 0, 4]`.
 
 ### Base Sepolia deployments
 
@@ -27,8 +29,8 @@ Canonical rest/zero-stimulus final hash for both variants:
 | --- | ---: | --- | --- | ---: | ---: |
 | Poseidon commitment | 1 | `0x4C8dDe9847DaB578175514584CFe32E5DC55Cec9` | `0x09026f39dd7027c10e62e7b420994b97a9fde66f8c8262cdfbaec14d751c9f03` | 1 field | 4,236,198 |
 | Open outputs | 1 | `0x0E5e9A3FEF33a807C56F7E01f8edA205e853f394` | `0x4c724719d9ef44b0f69c6fa7db965d42f4bf55b33248c9348a9aec53c906d611` | 3143 fields | 9,218,063 |
-| Poseidon commitment | 10 | `0x7a7AACF9f9D748C5C64a267338D011bB57FEA055` | `0x6c9cb32166d07f519732059464e6ea76b9854f2812332621a63579c3f1e344a1` | 1 field | 4,537,276 |
-| Open outputs | 10 | `0x6c806386c6580937895aB209F0e610AED0aCc332` | `0xabc21ca8db947231a5fee3cb59f0d1f8f89b8c6c032d37caf9f10e0ddfe5ae1e` | 3143 fields | 9,525,134 |
+| Poseidon commitment | 10 | `0x7a7AACF9f9D748C5C64a267338D011bB57FEA055` | `0xceb984595ef19ba647608fe85ab2d1ff7a707ded54eceab0ae55026b1094c51c` | 1 field | 4,537,264 |
+| Open outputs | 10 | `0x6c806386c6580937895aB209F0e610AED0aCc332` | `0xa490a38e44ac7253adcca83689c688d7cad9c11cdef7f447fc8b29f1f995c790` | 3143 fields | 9,525,710 |
 
 Network details and transaction notes are in `docs/base_sepolia_verification_result.md`.
 
@@ -50,7 +52,7 @@ Localhost was run with `anvil --code-size-limit 1000000`; details are in `docs/l
 | Poseidon commitment | 10 | 11,456 B | 32 B | 46,900.94 MB / 1015.83 s | 3340.82 MB / 25.19 s | 8771.15 MB / 28.47 s | 10,457.50 MB / 43.02 s | 9.27 MB / 0.018 s |
 | Open outputs | 10 | 11,456 B | 100,576 B | 49,973.37 MB / 1023.44 s | 3344.19 MB / 25.43 s | 8857.45 MB / 37.26 s | 10,489.85 MB / 42.81 s | 10.02 MB / 0.020 s |
 
-The 10-tick rows were built on a Vast x86_64 Ubuntu builder with about 251 GiB RAM because local macOS Nargo compilation OOMed. Logs are under `runs/cook2019_full_hybrid_*_t10/vast_t10_20260619_b/`.
+The 10-tick rows were built on a Vast x86_64 Ubuntu builder with about 251 GiB RAM because local macOS Nargo compilation OOMed. The sinusoidal t10 witness/proof refresh reused those compiled artifacts and regenerated the witness/proofs locally under `runs/cook2019_full_hybrid_*_t10/sinusoidal_awa_t10_20260622/`.
 
 
 ## Toolchain
@@ -102,6 +104,7 @@ Run only one one-tick mode, or run the 10-tick batch:
 python3 scripts/run_demo.py --variant open --prove
 python3 scripts/run_demo.py --variant poseidon --prove
 python3 scripts/run_demo.py --variant both_t10 --prove
+python3 scripts/run_demo.py --variant both_t10 --prove --stimulus sinusoidal_awa
 ```
 Artifacts and logs are written under `runs/`.
 
@@ -123,10 +126,16 @@ Base Sepolia usage is documented in `docs/foundry_deployment.md`.
 
 ## Expected canonical outputs
 
-Canonical rest/zero-stimulus witness final hash for both modes:
+Canonical rest/zero-stimulus one-tick witness final hash:
 
 ```text
 0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f
+```
+
+Canonical sinusoidal ten-tick witness final hash:
+
+```text
+0x23e010051a37941d0f64c45fd3043e052677712757ec349cd81394b3db9ab406
 ```
 
 Expected public-output counts:
@@ -140,7 +149,7 @@ Reference proof/public-input binaries and manifests from the originating full re
 
 ## Multi-tick continuity proof
 
-The `*_t10` circuits unroll ten internal ticks. Each tick consumes the exact state variables produced by the previous tick (`v`, `n`, `p`, `q`, `e`, `f`, `cai`, Randi state, and hybrid refractory state), so continuity is proven inside a single proof rather than trusted from an external trace. The private input `i_ext` is a ten-row external-current schedule; the canonical benchmark uses all-zero current for all ten ticks.
+The `*_t10` circuits unroll ten internal ticks. Each tick consumes the exact state variables produced by the previous tick (`v`, `n`, `p`, `q`, `e`, `f`, `cai`, Randi state, and hybrid refractory state), so continuity is proven inside a single proof rather than trusted from an external trace. The private input `i_ext` is a ten-row external-current schedule; the current on-chain benchmark uses `--stimulus sinusoidal_awa`, an offset sinusoid into AWAL/AWAR with per-tick values `[10, 16, 20, 20, 16, 10, 4, 0, 0, 4]`.
 
 This is not the full 60-second activity-trace diagnostic from the source repository. That diagnostic is 12,000 main timesteps per sensory probe, with 60,000 neural substeps, and is not currently practical as one unrolled Noir circuit. See `docs/multi_tick_circuit_plan.md`.
 

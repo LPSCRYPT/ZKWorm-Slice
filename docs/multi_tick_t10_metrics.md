@@ -9,12 +9,14 @@ The ten-tick circuits prove an internally continuous, unrolled brain-slice rollo
 - 302-slot hybrid refractory state.
 - A private `i_ext[t][302]` current schedule.
 
-The canonical benchmark uses all-zero external current for all ten ticks. The output commitment is unchanged from the one-tick rest benchmark because the all-rest/all-zero-current state is a fixed point under this integer circuit approximation.
+The current on-chain ten-tick benchmark uses an offset sinusoidal external-current schedule into AWAL/AWAR (indices 72/73). The per-tick current values are `[10, 16, 20, 20, 16, 10, 4, 0, 0, 4]` in the circuit's non-negative integer pA-compatible units. Randi state and hybrid refractory state still initialize to zero.
 
-Input-data caveat: these proof inputs are benchmark inputs, not embodied sensory observations. They verify circuit correctness, output layout, and resource use at a deterministic rest/zero-current fixed point. They do not claim chemotaxis, learning, or spontaneous behaviour. The source Python activity-trace and embodied simulations use scripted or environment-generated currents separately from this benchmark witness.
+Input-data caveat: these proof inputs are benchmark stimulus inputs, not embodied sensory observations. They verify circuit correctness, output layout, resource use, and short-horizon continuity under a scripted sinusoidal neural input. They do not claim chemotaxis, learning, or spontaneous behaviour. The source Python activity-trace and embodied simulations use scripted or environment-generated currents separately from this benchmark witness.
+
+Sinusoidal ten-tick final commitment:
 
 ```text
-0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f
+0x23e010051a37941d0f64c45fd3043e052677712757ec349cd81394b3db9ab406
 ```
 
 ## Feasibility note
@@ -50,15 +52,15 @@ Run id: `vast_t10_20260619_b`
 
 | Variant | Verifier contract | Verify tx | Public outputs | Verify gas |
 | --- | --- | --- | ---: | ---: |
-| `brain_cook2019_full_hybrid_poseidon_t10` | `0x7a7AACF9f9D748C5C64a267338D011bB57FEA055` | `0x6c9cb32166d07f519732059464e6ea76b9854f2812332621a63579c3f1e344a1` | 1 field | 4,537,276 |
-| `brain_cook2019_full_hybrid_open_t10` | `0x6c806386c6580937895aB209F0e610AED0aCc332` | `0xabc21ca8db947231a5fee3cb59f0d1f8f89b8c6c032d37caf9f10e0ddfe5ae1e` | 3143 fields | 9,525,134 |
+| `brain_cook2019_full_hybrid_poseidon_t10` | `0x7a7AACF9f9D748C5C64a267338D011bB57FEA055` | `0xceb984595ef19ba647608fe85ab2d1ff7a707ded54eceab0ae55026b1094c51c` | 1 field | 4,537,264 |
+| `brain_cook2019_full_hybrid_open_t10` | `0x6c806386c6580937895aB209F0e610AED0aCc332` | `0xa490a38e44ac7253adcca83689c688d7cad9c11cdef7f447fc8b29f1f995c790` | 3143 fields | 9,525,710 |
 
 Both transactions returned `status: 0x1`; the deployment script also checked each verifier with a successful `cast call` before sending the transaction. The ten-tick contracts are deployed separately from the one-tick contracts because their verification keys and circuit relations are different.
 
 ## Artifacts
 
-- Poseidon manifest: `runs/cook2019_full_hybrid_poseidon_t10/vast_t10_20260619_b/manifest.json`
-- Open manifest: `runs/cook2019_full_hybrid_open_t10/vast_t10_20260619_b/manifest.json`
+- Poseidon sinusoidal manifest: `runs/cook2019_full_hybrid_poseidon_t10/sinusoidal_awa_t10_20260622/manifest.json`
+- Open sinusoidal manifest: `runs/cook2019_full_hybrid_open_t10/sinusoidal_awa_t10_20260622/manifest.json`
 - Poseidon circuit: `circuits/brain_cook2019_full_hybrid_poseidon_t10/src/main.nr`
 - Open circuit: `circuits/brain_cook2019_full_hybrid_open_t10/src/main.nr`
 

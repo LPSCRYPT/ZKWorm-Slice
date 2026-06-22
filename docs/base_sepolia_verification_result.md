@@ -40,9 +40,9 @@ gas used:       0x8ca80f (9,218,063)
 verifier:       0x7a7AACF9f9D748C5C64a267338D011bB57FEA055
 static_call:    true
 tx status:      0x1
-tx hash:        0x6c9cb32166d07f519732059464e6ea76b9854f2812332621a63579c3f1e344a1
-block number:   0x292d389
-gas used:       0x453bbc (4,537,276)
+tx hash:        0xceb984595ef19ba647608fe85ab2d1ff7a707ded54eceab0ae55026b1094c51c
+block number:   0x292dc95
+gas used:       0x453bb0 (4,537,264)
 ```
 
 ## Ten-tick open-output mode
@@ -51,13 +51,13 @@ gas used:       0x453bbc (4,537,276)
 verifier:       0x6c806386c6580937895aB209F0e610AED0aCc332
 static_call:    true
 tx status:      0x1
-tx hash:        0xabc21ca8db947231a5fee3cb59f0d1f8f89b8c6c032d37caf9f10e0ddfe5ae1e
-block number:   0x292d396
-gas used:       0x91578e (9,525,134)
+tx hash:        0xa490a38e44ac7253adcca83689c688d7cad9c11cdef7f447fc8b29f1f995c790
+block number:   0x292dc9b
+gas used:       0x9159ce (9,525,710)
 ```
 
-Both on-chain POC transactions verified the canonical proof generated from the rest/zero-stimulus witness with final hash:
+The ten-tick on-chain transactions verified the sinusoidal AWAL/AWAR witness with final hash:
 
 ```text
-0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f
+0x23e010051a37941d0f64c45fd3043e052677712757ec349cd81394b3db9ab406
 ```
