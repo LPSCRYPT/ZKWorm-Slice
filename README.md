@@ -1,5 +1,7 @@
 # ZKWorm-Slice
 
+![ZKWorm-Slice brain circuit dataflow](docs/assets/brain_slice_dataflow_cover.png)
+
 Standalone public demo slice for the ZKWorm one-tick brain circuit.
 
 This repository contains two self-contained Noir circuits generated from the ZKWorm current-model benchmark:
