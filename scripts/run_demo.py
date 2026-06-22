@@ -8,6 +8,7 @@ import os
 import re
 import shlex
 import subprocess
+import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -20,8 +21,10 @@ V0 = 18000
 CA0 = 5000
 G = 1000
 VARS = {
-    "open": ("brain_cook2019_full_hybrid_open_t1", "cook2019_full_hybrid_open_t1"),
-    "poseidon": ("brain_cook2019_full_hybrid_poseidon_t1", "cook2019_full_hybrid_poseidon_t1"),
+    "open": ("brain_cook2019_full_hybrid_open_t1", "cook2019_full_hybrid_open_t1", 1),
+    "poseidon": ("brain_cook2019_full_hybrid_poseidon_t1", "cook2019_full_hybrid_poseidon_t1", 1),
+    "open_t10": ("brain_cook2019_full_hybrid_open_t10", "cook2019_full_hybrid_open_t10", 10),
+    "poseidon_t10": ("brain_cook2019_full_hybrid_poseidon_t10", "cook2019_full_hybrid_poseidon_t10", 10),
 }
 
 
@@ -44,12 +47,13 @@ def arr(name: str, xs: list[int]) -> str:
     return f"{name} = [" + ", ".join(map(str, xs)) + "]"
 
 
-def write_prover(circuit_dir: Path) -> None:
+def write_prover(circuit_dir: Path, ticks: int) -> None:
     n = [pb(V0, 109870, 15850)] * N
     p = [pb(V0, 81950, 7430)] * N
     q = [pbi(V0, 74350, 9970)] * N
     e = [pb(V0, 86640, 6750)] * N
     f = [pbi(V0, 115180, 5030)] * N
+    i_ext_rows = ["  [" + ", ".join(["0"] * N) + "]" for _ in range(ticks)]
     lines = [
         arr("v_init", [V0] * N),
         arr("n_init", n),
@@ -61,7 +65,7 @@ def write_prover(circuit_dir: Path) -> None:
         arr("randi_state_init", [0] * N),
         arr("hybrid_refractory_init", [0] * N),
         "i_ext = [",
-        "  [" + ", ".join(["0"] * N) + "]",
+        ",\n".join(i_ext_rows),
         "]",
         "",
     ]
@@ -70,11 +74,15 @@ def write_prover(circuit_dir: Path) -> None:
 
 def time_metrics(stderr: str) -> dict[str, int | float]:
     data: dict[str, int | float] = {}
-    for key, pattern in {
+    patterns = {
         "max_rss_bytes": r"(\d+)\s+maximum resident set size",
         "minor_faults": r"(\d+)\s+page reclaims",
         "page_faults": r"(\d+)\s+page faults",
-    }.items():
+    }
+    linux_match = re.search(r"Maximum resident set size \(kbytes\): (\d+)", stderr)
+    if linux_match:
+        data["max_rss_bytes"] = int(linux_match.group(1)) * 1024
+    for key, pattern in patterns.items():
         match = re.search(pattern, stderr)
         if match:
             data[key] = int(match.group(1))
@@ -85,8 +93,9 @@ def time_metrics(stderr: str) -> dict[str, int | float]:
 
 def run(label: str, cmd: list[Path | str], cwd: Path, run_dir: Path, timeout: int) -> dict:
     start = time.time()
+    time_args = ["/usr/bin/time", "-l"] if sys.platform == "darwin" else ["/usr/bin/time", "-v"]
     proc = subprocess.run(
-        ["/usr/bin/time", "-l"] + [str(x) for x in cmd],
+        time_args + [str(x) for x in cmd],
         cwd=str(cwd),
         capture_output=True,
         text=True,
@@ -137,12 +146,11 @@ def artifact_sizes(circuit_dir: Path, package: str) -> dict[str, int]:
 
 
 def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
-    package, brain_version = VARS[variant]
+    package, brain_version, ticks = VARS[variant]
     circuit_dir = ROOT / "circuits" / package
     run_dir = ROOT / "runs" / brain_version / (run_id or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ"))
     run_dir.mkdir(parents=True, exist_ok=True)
-    write_prover(circuit_dir)
-
+    write_prover(circuit_dir, ticks)
     records = [run("nargo_check", [NARGO, "check"], circuit_dir, run_dir, 900)]
     if records[-1]["exit_code"] == 0:
         records.append(run("nargo_compile", [NARGO, "compile"], circuit_dir, run_dir, 3600))
@@ -166,7 +174,7 @@ def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
         "run_id": run_dir.name,
         "circuit_package": package,
         "variant": variant,
-        "proof_statement": f"Cook 2019 one-tick full documented current model with dynamic Randi modulation, hybrid calcium-spike/refractory hook, and motor outputs, {variant} public output scheme",
+        "proof_statement": f"Cook 2019 {ticks}-tick full documented current model with dynamic Randi modulation, hybrid calcium-spike/refractory hook, motor outputs, and internal tick-to-tick state continuity, {variant} public output scheme",
         "source_reference": source,
         "toolchain": {
             "nargo_version": version(NARGO),
@@ -176,11 +184,11 @@ def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
         },
         "witness": {
             "stimulus": "zero",
-            "ticks": 1,
+            "ticks": ticks,
             "state_len": N,
             "randi_state_init": "all signed-magnitude zero",
             "hybrid_refractory_init": "all zero, encoded ms*1000",
-            "i_ext": "all zero; nonzero thresholds use v6 integer pA-compatible units",
+            "i_ext": f"all zero for {ticks} tick(s); nonzero thresholds use v6 integer pA-compatible units",
             "public_output_fields": source["public_output_count"],
         },
         "artifacts": {
@@ -208,12 +216,17 @@ def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the ZKWorm one-tick demo in open-output and/or Poseidon commitment mode.")
-    parser.add_argument("--variant", choices=["open", "poseidon", "both"], default="both")
+    parser = argparse.ArgumentParser(description="Run the ZKWorm brain-slice demo in open-output and/or Poseidon commitment mode.")
+    parser.add_argument("--variant", choices=["open", "poseidon", "open_t10", "poseidon_t10", "both", "both_t10"], default="both")
     parser.add_argument("--prove", action="store_true", help="Also run bb write_vk/prove/verify after Nargo execution.")
     parser.add_argument("--run-id", help="Optional deterministic run directory name.")
     args = parser.parse_args()
-    variants = ["open", "poseidon"] if args.variant == "both" else [args.variant]
+    if args.variant == "both":
+        variants = ["open", "poseidon"]
+    elif args.variant == "both_t10":
+        variants = ["open_t10", "poseidon_t10"]
+    else:
+        variants = [args.variant]
     results = [run_one(variant, args.prove, args.run_id) for variant in variants]
     print(json.dumps(results, indent=2))
     return 0 if all(result["last_exit"] == 0 for result in results) else 1

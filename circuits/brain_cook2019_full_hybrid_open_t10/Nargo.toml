@@ -1,0 +1,7 @@
+[package]
+name = "brain_cook2019_full_hybrid_open_t10"
+type = "bin"
+authors = [""]
+compiler_version = ">=0.34.0"
+
+[dependencies]

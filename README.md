@@ -39,10 +39,14 @@ Localhost was run with `anvil --code-size-limit 1000000`; details are in `docs/l
 
 ### Proving artifacts and peak resource use
 
-| Variant | Proof size | Public-input size | nargo compile peak RAM / time | nargo execute peak RAM / time | bb write_vk peak RAM / time | bb prove peak RAM / time | bb verify peak RAM / time |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Poseidon commitment | 10,304 B | 32 B | 463.89 MB / 0.58 s | 482.31 MB / 1.45 s | 1022.27 MB / 2.94 s | 1231.66 MB / 8.04 s | 15.02 MB / 0.014 s |
-| Open outputs | 10,304 B | 100,576 B | 433.08 MB / 0.65 s | 511.86 MB / 1.50 s | 973.58 MB / 3.21 s | 1267.81 MB / 6.54 s | 16.55 MB / 0.013 s |
+| Variant | Ticks | Proof size | Public-input size | nargo compile peak RAM / time | nargo execute peak RAM / time | bb write_vk peak RAM / time | bb prove peak RAM / time | bb verify peak RAM / time |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Poseidon commitment | 1 | 10,304 B | 32 B | 463.89 MB / 0.58 s | 482.31 MB / 1.45 s | 1022.27 MB / 2.94 s | 1231.66 MB / 8.04 s | 15.02 MB / 0.014 s |
+| Open outputs | 1 | 10,304 B | 100,576 B | 433.08 MB / 0.65 s | 511.86 MB / 1.50 s | 973.58 MB / 3.21 s | 1267.81 MB / 6.54 s | 16.55 MB / 0.013 s |
+| Poseidon commitment | 10 | 11,456 B | 32 B | 46,900.94 MB / 1015.83 s | 3340.82 MB / 25.19 s | 8771.15 MB / 28.47 s | 10,457.50 MB / 43.02 s | 9.27 MB / 0.018 s |
+| Open outputs | 10 | 11,456 B | 100,576 B | 49,973.37 MB / 1023.44 s | 3344.19 MB / 25.43 s | 8857.45 MB / 37.26 s | 10,489.85 MB / 42.81 s | 10.02 MB / 0.020 s |
+
+The 10-tick rows were built on a Vast x86_64 Ubuntu builder with about 251 GiB RAM because local macOS Nargo compilation OOMed. Logs are under `runs/cook2019_full_hybrid_*_t10/vast_t10_20260619_b/`.
 
 
 ## Toolchain
@@ -88,13 +92,13 @@ Compile, execute, prove, and verify both variants:
 python3 scripts/run_demo.py --variant both --prove
 ```
 
-Run only one mode:
+Run only one one-tick mode, or run the 10-tick batch:
 
 ```sh
 python3 scripts/run_demo.py --variant open --prove
 python3 scripts/run_demo.py --variant poseidon --prove
+python3 scripts/run_demo.py --variant both_t10 --prove
 ```
-
 Artifacts and logs are written under `runs/`.
 
 ## Foundry verifier demo
@@ -129,6 +133,12 @@ poseidon: 1 field
 ```
 
 Reference proof/public-input binaries and manifests from the originating full repository are in `docs/`.
+
+## Multi-tick continuity proof
+
+The `*_t10` circuits unroll ten internal ticks. Each tick consumes the exact state variables produced by the previous tick (`v`, `n`, `p`, `q`, `e`, `f`, `cai`, Randi state, and hybrid refractory state), so continuity is proven inside a single proof rather than trusted from an external trace. The private input `i_ext` is a ten-row external-current schedule; the canonical benchmark uses all-zero current for all ten ticks.
+
+This is not the full 60-second activity-trace diagnostic from the source repository. That diagnostic is 12,000 main timesteps per sensory probe, with 60,000 neural substeps, and is not currently practical as one unrolled Noir circuit. See `docs/multi_tick_circuit_plan.md`.
 
 ## Open-output public layout
 
