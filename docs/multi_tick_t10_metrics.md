@@ -11,6 +11,8 @@ The ten-tick circuits prove an internally continuous, unrolled brain-slice rollo
 
 The canonical benchmark uses all-zero external current for all ten ticks. The output commitment is unchanged from the one-tick rest benchmark because the all-rest/all-zero-current state is a fixed point under this integer circuit approximation.
 
+Input-data caveat: these proof inputs are benchmark inputs, not embodied sensory observations. They verify circuit correctness, output layout, and resource use at a deterministic rest/zero-current fixed point. They do not claim chemotaxis, learning, or spontaneous behaviour. The source Python activity-trace and embodied simulations use scripted or environment-generated currents separately from this benchmark witness.
+
 ```text
 0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f
 ```
@@ -50,3 +52,8 @@ Run id: `vast_t10_20260619_b`
 - Open manifest: `runs/cook2019_full_hybrid_open_t10/vast_t10_20260619_b/manifest.json`
 - Poseidon circuit: `circuits/brain_cook2019_full_hybrid_poseidon_t10/src/main.nr`
 - Open circuit: `circuits/brain_cook2019_full_hybrid_open_t10/src/main.nr`
+
+
+## Fidelity roadmap
+
+The t10 proof is a brain-slice continuity benchmark. Increasing experiment fidelity means progressively circuitizing the existing source-model brain -> body -> environment -> brain loop: motor outputs drive the body model, body pose samples arena/source fields and wall contacts, sensory/proprioceptive transduction produces the next brain input, and the resulting state is committed on-chain. The long-term target is a standalone on-chain C. elegans-like lifeform whose world line is a sequence of verified brain/body/environment transitions rather than isolated neural ticks.
