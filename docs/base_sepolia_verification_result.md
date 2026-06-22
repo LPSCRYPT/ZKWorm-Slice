@@ -34,7 +34,7 @@ block number:   0x2926ef2
 gas used:       0x8ca80f (9,218,063)
 ```
 
-Both on-chain POC transactions verified the canonical v7 proof generated from the rest/zero-stimulus witness with final hash:
+Both on-chain POC transactions verified the canonical proof generated from the rest/zero-stimulus witness with final hash:
 
 ```text
 0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f

@@ -12,12 +12,12 @@ ROOT = Path(__file__).resolve().parents[1]
 BB = Path(os.environ.get("BB_PATH", str(Path.home() / ".bb/bb")))
 VARIANTS = {
     "open": {
-        "package": "brain_v7_cook2019_full_hybrid_open_t1",
-        "fixture": "circuits/brain_v7_cook2019_full_hybrid_open_t1/target/proof_dir",
+        "package": "brain_cook2019_full_hybrid_open_t1",
+        "fixture": "circuits/brain_cook2019_full_hybrid_open_t1/target/proof_dir",
     },
     "poseidon": {
-        "package": "brain_v7_cook2019_full_hybrid_poseidon_t1",
-        "fixture": "circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/target/proof_dir",
+        "package": "brain_cook2019_full_hybrid_poseidon_t1",
+        "fixture": "circuits/brain_cook2019_full_hybrid_poseidon_t1/target/proof_dir",
     },
 }
 
@@ -35,7 +35,7 @@ def ensure_artifacts(variant: str) -> None:
     package = VARIANTS[variant]["package"]
     circuit = ROOT / "circuits" / package
     if not (circuit / "target" / "vk").exists() or not (circuit / "target/proof_dir/proof").exists():
-        cmd = ["python3", "scripts/run_v7_demo.py", "--variant", variant, "--prove", "--run-id", "deploy_artifacts"]
+        cmd = ["python3", "scripts/run_demo.py", "--variant", variant, "--prove", "--run-id", "deploy_artifacts"]
         run(cmd)
 
 
@@ -157,7 +157,7 @@ def call_verify(variant: str, address: str, rpc_url: str) -> str:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate, deploy, and exercise a v7 Solidity verifier.")
+    parser = argparse.ArgumentParser(description="Generate, deploy, and exercise a Solidity verifier.")
     parser.add_argument("--variant", choices=["open", "poseidon"], required=True)
     parser.add_argument("--rpc-url", default=os.environ.get("RPC_URL"))
     parser.add_argument("--private-key", default=os.environ.get("PRIVATE_KEY"))

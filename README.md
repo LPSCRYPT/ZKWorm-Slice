@@ -1,13 +1,47 @@
 # ZKWorm-Slice
 
-Standalone public demo slice for the ZKWorm v7 one-tick brain circuit.
+Standalone public demo slice for the ZKWorm one-tick brain circuit.
 
-This repository contains two self-contained Noir circuits generated from the ZKWorm current-model v7 benchmark:
+This repository contains two self-contained Noir circuits generated from the ZKWorm current-model benchmark:
 
-- `brain_v7_cook2019_full_hybrid_open_t1`: exposes the full public output vector.
-- `brain_v7_cook2019_full_hybrid_poseidon_t1`: exposes only the Poseidon commitment.
+- `brain_cook2019_full_hybrid_open_t1`: exposes the full public output vector.
+- `brain_cook2019_full_hybrid_poseidon_t1`: exposes only the Poseidon commitment.
 
 Both circuits prove one tick of the documented Cook 2019 brain model with dynamic Randi slow modulation, the hybrid spike/refractory hook, generated synaptic gains, and WormAtlas motor-adapter outputs.
+
+## On-chain deployments and benchmark snapshot
+
+Canonical rest/zero-stimulus final hash for both variants:
+
+```text
+0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f
+```
+
+### Base Sepolia deployments
+
+| Variant | Verifier contract | Verify tx | Public outputs | Verify gas |
+| --- | --- | --- | ---: | ---: |
+| Poseidon commitment | `0x4C8dDe9847DaB578175514584CFe32E5DC55Cec9` | `0x09026f39dd7027c10e62e7b420994b97a9fde66f8c8262cdfbaec14d751c9f03` | 1 field | 4,236,198 |
+| Open outputs | `0x0E5e9A3FEF33a807C56F7E01f8edA205e853f394` | `0x4c724719d9ef44b0f69c6fa7db965d42f4bf55b33248c9348a9aec53c906d611` | 3143 fields | 9,218,063 |
+
+Network details and transaction notes are in `docs/base_sepolia_verification_result.md`.
+
+### Localhost Foundry verification
+
+| Variant | Local verifier | Verify tx | Verify gas |
+| --- | --- | --- | ---: |
+| Poseidon commitment | `0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9` | `0xd1cc310638b9cb1c0c5900012b2fe486d42b43e2ef6f9cb61a439857e61c0301` | 2,883,699 |
+| Open outputs | `0x0165878A594ca255338adfa4d48449f69242Eb8F` | `0x62b6407b4a67f550084395182529c36887ac8836ed5ec479939955ae8c3af16b` | 7,865,564 |
+
+Localhost was run with `anvil --code-size-limit 1000000`; details are in `docs/localhost_verification_result.md`.
+
+### Proving artifacts and peak resource use
+
+| Variant | Proof size | Public-input size | nargo compile peak RAM / time | nargo execute peak RAM / time | bb write_vk peak RAM / time | bb prove peak RAM / time | bb verify peak RAM / time |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Poseidon commitment | 10,304 B | 32 B | 463.89 MB / 0.58 s | 482.31 MB / 1.45 s | 1022.27 MB / 2.94 s | 1231.66 MB / 8.04 s | 15.02 MB / 0.014 s |
+| Open outputs | 10,304 B | 100,576 B | 433.08 MB / 0.65 s | 511.86 MB / 1.50 s | 973.58 MB / 3.21 s | 1267.81 MB / 6.54 s | 16.55 MB / 0.013 s |
+
 
 ## Toolchain
 
@@ -35,7 +69,7 @@ The demo runner defaults to:
 Override paths if needed:
 
 ```sh
-NARGO_PATH=/path/to/nargo BB_PATH=/path/to/bb python3 scripts/run_v7_demo.py --variant both --prove
+NARGO_PATH=/path/to/nargo BB_PATH=/path/to/bb python3 scripts/run_demo.py --variant both --prove
 ```
 
 ## Quick start
@@ -43,20 +77,20 @@ NARGO_PATH=/path/to/nargo BB_PATH=/path/to/bb python3 scripts/run_v7_demo.py --v
 Compile and execute both variants without proving:
 
 ```sh
-python3 scripts/run_v7_demo.py --variant both
+python3 scripts/run_demo.py --variant both
 ```
 
 Compile, execute, prove, and verify both variants:
 
 ```sh
-python3 scripts/run_v7_demo.py --variant both --prove
+python3 scripts/run_demo.py --variant both --prove
 ```
 
 Run only one mode:
 
 ```sh
-python3 scripts/run_v7_demo.py --variant open --prove
-python3 scripts/run_v7_demo.py --variant poseidon --prove
+python3 scripts/run_demo.py --variant open --prove
+python3 scripts/run_demo.py --variant poseidon --prove
 ```
 
 Artifacts and logs are written under `runs/`.
@@ -131,10 +165,10 @@ Known boundary: sigmoid/exponential dynamics are deterministic fixed-point appro
 
 ## Reference provenance
 
-Originating repository commit for the generated v7 circuit metadata:
+Originating repository commit for the generated circuit metadata:
 
 ```text
 d8454642be654ea3d6a2e8e18e4c788f4d86185f
 ```
 
-The standalone slice was extracted from `LPSCRYPT/zkworm-working` after the v7 artifacts were committed there.
+The standalone slice was extracted from `LPSCRYPT/zkworm-working` after the canonical slice artifacts were committed there.

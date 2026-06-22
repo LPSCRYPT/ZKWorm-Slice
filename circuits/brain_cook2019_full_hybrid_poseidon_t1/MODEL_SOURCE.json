@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "package": "brain_v7_cook2019_full_hybrid_open_t1",
-  "brain_version": "v7_cook2019_full_hybrid_open_t1",
-  "variant": "open",
+  "package": "brain_cook2019_full_hybrid_poseidon_t1",
+  "brain_version": "cook2019_full_hybrid_poseidon_t1",
+  "variant": "poseidon",
   "source_model_dir": "brain/_current_model plus repo-relative brain imports",
   "source_commit": "d8454642be654ea3d6a2e8e18e4c788f4d86185f",
   "neuron_count": 302,
@@ -147,21 +147,9 @@
   },
   "circuitized_scope": "one tick integer approximation of Cook 2019 current model with dynamic Randi slow modulation, generated synaptic gains, hybrid calcium-spike/refractory hook, and WormAtlas motor adapter outputs",
   "neuron_names_sha256": "35ca760721c158324b1b9258f2e6ff7399a51eb3fa4cd0edbaed38600f37e79b",
-  "public_output_count": 3143,
+  "public_output_count": 1,
   "public_output_layout": {
-    "0": "final_state_hash",
-    "1..302": "v[0..301]",
-    "303..604": "n[0..301]",
-    "605..906": "p[0..301]",
-    "907..1208": "q[0..301]",
-    "1209..1510": "e[0..301]",
-    "1511..1812": "f[0..301]",
-    "1813..2114": "cai[0..301]",
-    "2115..2416": "randi_state signed-magnitude[0..301]",
-    "2417..2718": "syn_gain[0..301] scale=1000",
-    "2719..3020": "hybrid_refractory_out[0..301] ms*1000",
-    "3021..3094": "muscle[0..73] scale=1000, order=muscle_names",
-    "3095..3142": "quadrants[12][4] flattened segment-major, scale=1000"
+    "0": "final_state_hash"
   },
   "hash_commitment": "final_state_hash absorbs neural state, Randi state, syn_gain, hybrid_refractory_out, 74 muscle outputs, and 48 quadrant outputs; 302-element remainders are absorbed explicitly",
   "first_neurons": [

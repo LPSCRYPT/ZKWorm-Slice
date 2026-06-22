@@ -56,7 +56,7 @@ tx hash:        0x62b6407b4a67f550084395182529c36887ac8836ed5ec479939955ae8c3af1
 gas used:       0x7804dc (7,865,564)
 ```
 
-Both modes verified the canonical v7 proof generated from the rest/zero-stimulus witness with final hash:
+Both modes verified the canonical proof generated from the rest/zero-stimulus witness with final hash:
 
 ```text
 0x1776657d57959fdcdeda347473a0bb38272678bdedd23818ab601b078ee4433f

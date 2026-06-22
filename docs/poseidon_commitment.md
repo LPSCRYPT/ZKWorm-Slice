@@ -1,4 +1,4 @@
-# v7_cook2019_full_hybrid_poseidon_t1
+# cook2019_full_hybrid_poseidon_t1
 
 One-tick full documented current-model circuit with compact Poseidon2 commitment over neural state, dynamic Randi state/gains, hybrid refractory state, and WormAtlas motor outputs.
 
@@ -10,11 +10,11 @@ One-tick full documented current-model circuit with compact Poseidon2 commitment
 
 ## Circuit
 
-- Package: `circuit/circuits/brain_v7_cook2019_full_hybrid_poseidon_t1/`
+- Package: `circuit/circuits/brain_cook2019_full_hybrid_poseidon_t1/`
 - Generator: `circuit/tools/brain/generate_cook2019_full_hybrid_t1_circuits.py`
 - Runner: `circuit/tools/brain/run_cook2019_full_hybrid_t1_circuit.py`
-- Fixture: `circuit/contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/`
-- Logs: `circuit/contracts/test/fixtures/brain/v7_cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/`
+- Fixture: `circuit/contracts/test/fixtures/brain/cook2019_full_hybrid_poseidon_t1/`
+- Logs: `circuit/contracts/test/fixtures/brain/cook2019_full_hybrid_poseidon_t1/logs/20260621T180725Z_worker_prove/`
 
 ## Hybrid hook
 
@@ -80,4 +80,4 @@ public_inputs: 32 bytes
 
 ## Boundary
 
-This is the current most complete compact commitment benchmark. It proves the same constrained computation as `v7_cook2019_full_hybrid_open_t1` while exposing only the final commitment. Sigmoid/exponential operations remain deterministic fixed-point approximations.
+This is the current most complete compact commitment benchmark. It proves the same constrained computation as `cook2019_full_hybrid_open_t1` while exposing only the final commitment. Sigmoid/exponential operations remain deterministic fixed-point approximations.

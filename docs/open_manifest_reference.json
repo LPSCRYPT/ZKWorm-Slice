@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "brain_version": "v7_cook2019_full_hybrid_open_t1",
+  "brain_version": "cook2019_full_hybrid_open_t1",
   "run_id": "20260621T180725Z_worker_prove",
-  "circuit_package": "brain_v7_cook2019_full_hybrid_open_t1",
+  "circuit_package": "brain_cook2019_full_hybrid_open_t1",
   "variant": "open",
   "proof_statement": "Cook 2019 one-tick full documented current model with dynamic Randi modulation, hybrid calcium-spike/refractory hook, and motor outputs, open public output scheme",
   "source_reference": {
     "schema_version": 1,
-    "package": "brain_v7_cook2019_full_hybrid_open_t1",
-    "brain_version": "v7_cook2019_full_hybrid_open_t1",
+    "package": "brain_cook2019_full_hybrid_open_t1",
+    "brain_version": "cook2019_full_hybrid_open_t1",
     "variant": "open",
     "source_model_dir": "brain/_current_model plus repo-relative brain imports",
     "source_commit": "d8454642be654ea3d6a2e8e18e4c788f4d86185f",
@@ -212,11 +212,11 @@
     "public_output_fields": 3143
   },
   "artifacts": {
-    "circuit": "circuits/brain_v7_cook2019_full_hybrid_open_t1/src/main.nr",
-    "model_source": "circuits/brain_v7_cook2019_full_hybrid_open_t1/MODEL_SOURCE.json",
-    "prover_toml": "circuits/brain_v7_cook2019_full_hybrid_open_t1/Prover.toml",
-    "logs": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove",
-    "tracked_logs": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove"
+    "circuit": "circuits/brain_cook2019_full_hybrid_open_t1/src/main.nr",
+    "model_source": "circuits/brain_cook2019_full_hybrid_open_t1/MODEL_SOURCE.json",
+    "prover_toml": "circuits/brain_cook2019_full_hybrid_open_t1/Prover.toml",
+    "logs": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove",
+    "tracked_logs": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove"
   },
   "public_outputs": {
     "count": 3143,
@@ -253,7 +253,7 @@
     {
       "label": "nargo_check",
       "command": "/Users/bot/.nargo/bin/nargo check",
-      "cwd": "circuits/brain_v7_cook2019_full_hybrid_open_t1",
+      "cwd": "circuits/brain_cook2019_full_hybrid_open_t1",
       "exit_code": 0,
       "wall_seconds": 0.11314010620117188,
       "time_l": {
@@ -262,15 +262,15 @@
         "page_faults": 0,
         "max_rss_mb": 90.44
       },
-      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_check.stdout.log",
-      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_check.stderr.log",
-      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_check.stdout.log",
-      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_check.stderr.log"
+      "stdout_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_check.stdout.log",
+      "stderr_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_check.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_check.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_check.stderr.log"
     },
     {
       "label": "nargo_compile",
       "command": "/Users/bot/.nargo/bin/nargo compile",
-      "cwd": "circuits/brain_v7_cook2019_full_hybrid_open_t1",
+      "cwd": "circuits/brain_cook2019_full_hybrid_open_t1",
       "exit_code": 0,
       "wall_seconds": 0.646517276763916,
       "time_l": {
@@ -279,15 +279,15 @@
         "page_faults": 0,
         "max_rss_mb": 433.08
       },
-      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_compile.stdout.log",
-      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_compile.stderr.log",
-      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_compile.stdout.log",
-      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_compile.stderr.log"
+      "stdout_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_compile.stdout.log",
+      "stderr_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_compile.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_compile.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_compile.stderr.log"
     },
     {
       "label": "nargo_execute",
       "command": "/Users/bot/.nargo/bin/nargo execute",
-      "cwd": "circuits/brain_v7_cook2019_full_hybrid_open_t1",
+      "cwd": "circuits/brain_cook2019_full_hybrid_open_t1",
       "exit_code": 0,
       "wall_seconds": 1.500140905380249,
       "time_l": {
@@ -296,15 +296,15 @@
         "page_faults": 0,
         "max_rss_mb": 511.86
       },
-      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_execute.stdout.log",
-      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_execute.stderr.log",
-      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_execute.stdout.log",
-      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_execute.stderr.log"
+      "stdout_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_execute.stdout.log",
+      "stderr_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/nargo_execute.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_execute.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/nargo_execute.stderr.log"
     },
     {
       "label": "bb_write_vk",
-      "command": "/Users/bot/.bb/bb write_vk -b /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/brain_v7_cook2019_full_hybrid_open_t1.json -o /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target --scheme ultra_honk --oracle_hash keccak",
-      "cwd": "circuits/brain_v7_cook2019_full_hybrid_open_t1",
+      "command": "/Users/bot/.bb/bb write_vk -b /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/brain_cook2019_full_hybrid_open_t1.json -o /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target --scheme ultra_honk --oracle_hash keccak",
+      "cwd": "circuits/brain_cook2019_full_hybrid_open_t1",
       "exit_code": 0,
       "wall_seconds": 3.2113659381866455,
       "time_l": {
@@ -313,15 +313,15 @@
         "page_faults": 0,
         "max_rss_mb": 973.58
       },
-      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_write_vk.stdout.log",
-      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_write_vk.stderr.log",
-      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_write_vk.stdout.log",
-      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_write_vk.stderr.log"
+      "stdout_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_write_vk.stdout.log",
+      "stderr_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_write_vk.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_write_vk.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_write_vk.stderr.log"
     },
     {
       "label": "bb_prove",
-      "command": "/Users/bot/.bb/bb prove -b /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/brain_v7_cook2019_full_hybrid_open_t1.json -w /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/brain_v7_cook2019_full_hybrid_open_t1.gz -o /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/proof_dir -k /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/vk --scheme ultra_honk --oracle_hash keccak",
-      "cwd": "circuits/brain_v7_cook2019_full_hybrid_open_t1",
+      "command": "/Users/bot/.bb/bb prove -b /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/brain_cook2019_full_hybrid_open_t1.json -w /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/brain_cook2019_full_hybrid_open_t1.gz -o /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/proof_dir -k /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/vk --scheme ultra_honk --oracle_hash keccak",
+      "cwd": "circuits/brain_cook2019_full_hybrid_open_t1",
       "exit_code": 0,
       "wall_seconds": 6.540833950042725,
       "time_l": {
@@ -330,15 +330,15 @@
         "page_faults": 7,
         "max_rss_mb": 1267.81
       },
-      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_prove.stdout.log",
-      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_prove.stderr.log",
-      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_prove.stdout.log",
-      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_prove.stderr.log"
+      "stdout_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_prove.stdout.log",
+      "stderr_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_prove.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_prove.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_prove.stderr.log"
     },
     {
       "label": "bb_verify",
-      "command": "/Users/bot/.bb/bb verify -k /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/vk -p /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/proof_dir/proof -i /Users/bot/code/zkworm-working/circuit/circuits/brain_v7_cook2019_full_hybrid_open_t1/target/proof_dir/public_inputs --scheme ultra_honk --oracle_hash keccak",
-      "cwd": "circuits/brain_v7_cook2019_full_hybrid_open_t1",
+      "command": "/Users/bot/.bb/bb verify -k /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/vk -p /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/proof_dir/proof -i /Users/bot/code/zkworm-working/circuit/circuits/brain_cook2019_full_hybrid_open_t1/target/proof_dir/public_inputs --scheme ultra_honk --oracle_hash keccak",
+      "cwd": "circuits/brain_cook2019_full_hybrid_open_t1",
       "exit_code": 0,
       "wall_seconds": 0.013222217559814453,
       "time_l": {
@@ -347,10 +347,10 @@
         "page_faults": 7,
         "max_rss_mb": 16.55
       },
-      "stdout_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_verify.stdout.log",
-      "stderr_log": "runs/brain/v7_cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_verify.stderr.log",
-      "tracked_stdout_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_verify.stdout.log",
-      "tracked_stderr_log": "contracts/test/fixtures/brain/v7_cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_verify.stderr.log"
+      "stdout_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_verify.stdout.log",
+      "stderr_log": "runs/brain/cook2019_full_hybrid_open_t1/20260621T180725Z_worker_prove/bb_verify.stderr.log",
+      "tracked_stdout_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_verify.stdout.log",
+      "tracked_stderr_log": "contracts/test/fixtures/brain/cook2019_full_hybrid_open_t1/logs/20260621T180725Z_worker_prove/bb_verify.stderr.log"
     }
   ]
 }

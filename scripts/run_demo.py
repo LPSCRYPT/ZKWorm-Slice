@@ -20,8 +20,8 @@ V0 = 18000
 CA0 = 5000
 G = 1000
 VARS = {
-    "open": ("brain_v7_cook2019_full_hybrid_open_t1", "v7_cook2019_full_hybrid_open_t1"),
-    "poseidon": ("brain_v7_cook2019_full_hybrid_poseidon_t1", "v7_cook2019_full_hybrid_poseidon_t1"),
+    "open": ("brain_cook2019_full_hybrid_open_t1", "cook2019_full_hybrid_open_t1"),
+    "poseidon": ("brain_cook2019_full_hybrid_poseidon_t1", "cook2019_full_hybrid_poseidon_t1"),
 }
 
 
@@ -208,7 +208,7 @@ def run_one(variant: str, prove: bool, run_id: str | None) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Run the ZKWorm v7 one-tick demo in open-output and/or Poseidon commitment mode.")
+    parser = argparse.ArgumentParser(description="Run the ZKWorm one-tick demo in open-output and/or Poseidon commitment mode.")
     parser.add_argument("--variant", choices=["open", "poseidon", "both"], default="both")
     parser.add_argument("--prove", action="store_true", help="Also run bb write_vk/prove/verify after Nargo execution.")
     parser.add_argument("--run-id", help="Optional deterministic run directory name.")
