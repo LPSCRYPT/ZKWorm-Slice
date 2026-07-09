@@ -4,6 +4,8 @@
 
 Standalone public demo slice for the ZKWorm brain circuit.
 
+See [`SupplementaryMaterials.md`](SupplementaryMaterials.md) for the paper appendix converted to Markdown, including circuit-boundary notes, benchmark tables, deployment records, and supporting figures.
+
 This repository contains four self-contained Noir circuits generated from the ZKWorm current-model benchmark:
 
 - `brain_cook2019_full_hybrid_open_t1`: exposes the full public output vector for one tick.
