@@ -30,7 +30,7 @@ or `h_{t+10}=H_P2(O_{t+10})` for the ten-tick variant, where `H_P2` denotes the 
 
 The deployed single-tick proof establishes that some private prior state `M_t` satisfies the fixed transition relation and produces the published output or commitment. It does not, by itself, prove continuity from a previously accepted tick. A chained deployment would add a public input commitment `h_t` and require it to match the prior accepted output commitment. The ten-tick proof establishes this continuity internally only for the ten unrolled ticks.
 
-## Supplementary Table S1. Brain Circuit Benchmarks
+## Table S1. Brain Circuit Benchmarks
 
 Both one-tick and ten-tick rows report deployed Base Sepolia proof variants. Build-time and proof-time resource measurements are separated because circuit compilation and proof generation have different memory profiles.
 
@@ -50,39 +50,39 @@ Both one-tick and ten-tick rows report deployed Base Sepolia proof variants. Bui
 | Public input bytes | 10 | 100,576 | 32 |
 | Base Sepolia gas | 10 | 9,525,710 | 4,537,264 |
 
-## Supplementary Figures
+## Figures
 
 The organism image and annotated Cook 2019 graph are shown here rather than in the main text to keep the central exposition focused on the proof boundary and results.
 
-### Supplementary Figure S1. *Caenorhabditis elegans* Reference Organism
+### Figure S1. *Caenorhabditis elegans* Reference Organism
 
-![Caenorhabditis elegans reference organism](https://raw.githubusercontent.com/LPSCRYPT/zkworm-working/main/paper/fig1.jpg)
+![Caenorhabditis elegans reference organism](docs/assets/fig1.jpg)
 
 *Caenorhabditis elegans*, the 1 mm nematode whose 302-neuron nervous system is the only connectome fully mapped at synaptic resolution. Image: Broad Institute.
 
-### Supplementary Figure S2. Annotated Cook 2019 Connectome Graph
+### Figure S2. Annotated Cook 2019 Connectome Graph
 
-![Annotated Cook 2019 connectome graph](https://raw.githubusercontent.com/LPSCRYPT/zkworm-working/main/paper/cook2019_labeled_connectome_graph.png)
+![Annotated Cook 2019 connectome graph](docs/assets/cook2019_labeled_connectome_graph.png)
 
 Connectome graph with the ZKWorm annotation layer used for model inspection. Purple nodes are pharyngeal neurons, blue nodes are sensory neurons, gray nodes are interneurons, black nodes are command interneurons, green nodes are excitatory locomotor motor neurons, and orange nodes are inhibitory locomotor motor neurons.
 
 The sensory trace diagnostic underlying the model-validity discussion is included here because it supports the limitation analysis more than the central circuit result.
 
-### Supplementary Figure S3. All-Neuron Sensory Trace Diagnostic
+### Figure S3. All-Neuron Sensory Trace Diagnostic
 
-![All-neuron sensory trace diagnostic](https://raw.githubusercontent.com/LPSCRYPT/zkworm-working/main/paper/cook2019_all_neuron_activity_traces.png)
+![All-neuron sensory trace diagnostic](docs/assets/cook2019_all_neuron_activity_traces.png)
 
 All-neuron voltage traces for four sensory probes. Each stacked panel shows all 302 neurons over 60 s as per-neuron normalized voltage change from the pre-stimulus baseline. Trace colors indicate neuron classes, black traces mark the directly stimulated sensory neurons, and the small input line shows the stimulus timing. These are substrate-response diagnostics, not locomotion-success claims.
 
 The autonomy quadrant diagram summarizes the substrate argument that motivates ZKWorm: biological organisms combine self-sufficiency and self-directedness, while ordinary blockchain agents and off-chain biophysical simulations each occupy only one side of that split.
 
-### Supplementary Figure S4. Four-Quadrant Model of Complex On-Chain Life
+### Figure S4. Four-Quadrant Model of Complex On-Chain Life
 
-![Four-quadrant model of complex on-chain life](https://raw.githubusercontent.com/LPSCRYPT/zkworm-working/main/paper/autonomy_quadrants.png)
+![Four-quadrant model of complex on-chain life](docs/assets/autonomy_quadrants.png)
 
 Four-quadrant model of complex on-chain life. The horizontal axis combines the AI-autonomy concept of self-sufficiency with the autopoietic concept of operational closure; the vertical axis combines self-directedness with organizational closure. Programmable cryptography moves biophysical simulations toward the high/high quadrant by making off-chain cognitive dynamics verifiable on a self-sustaining blockchain substrate.
 
-## Supplementary Table S2. Base Sepolia Deployment Records
+## Table S2. Base Sepolia Deployment Records
 
 The proof system was deployed and exercised on Base Sepolia in separate one-tick and ten-tick verifier variants. Each deployment used a separately generated Solidity verifier because each tick count and disclosure mode has a distinct circuit relation and verification key. The ten-tick rows use the sinusoidal AWAL/AWAR witness described in the paper; the one-tick rows use the rest/zero-stimulus witness.
 
